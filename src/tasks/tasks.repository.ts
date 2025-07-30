@@ -30,4 +30,20 @@ export class TasksRepository {
   delete(id: number) {
     return this.prisma.task.delete({ where: { id } });
   }
+
+  deleteAllByUserId(userId: number) {
+    return this.prisma.task.deleteMany({ where: { userId } });
+  }
+
+  findAllByClientId(clientId: number) {
+    return this.prisma.task.findMany({
+      where: { clientId },
+    });
+  }
+
+  deleteAllByClientId(clientId: number) {
+    return this.prisma.task.deleteMany({
+      where: { clientId },
+    });
+  }
 }

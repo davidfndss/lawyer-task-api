@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards, Request, HttpCode } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto, UpdateTaskDto } from './dto/tasks.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -8,6 +8,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
+  @HttpCode(201)
   @Post()
   create(@Body() dto: CreateTaskDto, @Request() req) {
     return this.tasksService.create(dto, req.user.id);
@@ -29,7 +30,7 @@ export class TasksController {
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
-    return this.tasksService.delete(+id);
+  delete(@Param('id') id: string, @Request() req) {
+    return this.tasksService.delete(+id, req.user.id);
   }
 }

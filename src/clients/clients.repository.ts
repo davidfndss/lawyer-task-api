@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateClientDto, UpdateClientDto } from './dto/clients.dto';
 
@@ -24,5 +24,9 @@ export class ClientsRepository {
 
   remove(id: number) {
     return this.prisma.client.delete({ where: { id } });
+  }
+
+  deleteAllByUserId(userId: number) {
+    return this.prisma.client.deleteMany({ where: { userId } });
   }
 }

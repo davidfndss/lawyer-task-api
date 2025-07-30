@@ -6,12 +6,14 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { UserRepository } from './user.repository';
-import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
+import { UpdateUserDto } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
+import { TasksService } from 'src/tasks/tasks.service';
+import { ClientsService } from 'src/clients/clients.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepo: UserRepository) {}
+  constructor(private readonly userRepo: UserRepository, private readonly tasksService: TasksService, private readonly clientsService: ClientsService) {}
 
   async findOne(id: number, userId: number) {
     if (id !== userId) {
@@ -64,11 +66,15 @@ export class UserService {
     return this.userRepo.update(id, dto);
   }
 
-  remove(id: number, userId: number) {
+  async remove(id: number, userId: number) {
     if (id !== userId) {
       throw new UnauthorizedException('You can only delete your own profile');
     }
 
-    return this.userRepo.remove(id);
+    await this.tasksService.deleteAllByUserId(userId);
+    await this.clientsService.deleteAllByUserId(userId);
+    await this.userRepo.remove(id);
+
+    return { message: 'User deleted successfully' };
   }
 }
