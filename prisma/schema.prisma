@@ -22,6 +22,8 @@ model User {
   updatedAt DateTime @updatedAt
 
   tasks     Task[]
+
+  Client    Client[]
 }
 
 model Client {
@@ -32,6 +34,9 @@ model Client {
   updatedAt DateTime @updatedAt
 
   tasks     Task[]
+
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
 }
 
 model Task {
