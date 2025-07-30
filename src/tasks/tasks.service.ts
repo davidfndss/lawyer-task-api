@@ -21,7 +21,9 @@ export class TasksService {
       throw new UnauthorizedException(`You do not have permission to create tasks for this client`);
     }
 
-    return this.tasksRepo.create(dto, userId);
+    const createdTask = await this.tasksRepo.create(dto, userId);
+
+    return { message: 'Task created successfully', ...createdTask };
   }
 
   findAll(userId: number) {
@@ -39,7 +41,7 @@ export class TasksService {
       throw new UnauthorizedException(`You do not have permission to access this task`);
     }
 
-    return task
+    return { message: 'Task found successfully!', ...task };
   }
 
   async update(id: number, dto: UpdateTaskDto, userId: number) {
@@ -76,7 +78,9 @@ export class TasksService {
       }
     }
 
-    return this.tasksRepo.update(id, dto);
+    const taskUpdated = await this.tasksRepo.update(id, dto);
+
+    return { message: 'Task updated successfully', ...taskUpdated };
   }
 
   async delete(id: number, userId: number) {
@@ -96,16 +100,18 @@ export class TasksService {
   }
 
   async deleteAllByUserId(userId: number) {
-    return await this.tasksRepo.deleteAllByUserId(userId);
+    try {
+      await this.tasksRepo.deleteAllByUserId(userId);
+    } catch (error) {
+      console.error(`Error deleting tasks for user with ID ${userId}, error: ${error}`);
+    }
   }
 
   async deleteAllByClientId(clientId: number) {
-    const tasks = await this.tasksRepo.findAllByClientId(clientId);
-    
-    if (tasks.length === 0) {
-      throw new NotFoundException(`No tasks found for client with ID ${clientId}`);
+    try {
+      await this.tasksRepo.deleteAllByClientId(clientId);
+    } catch (error) {
+      console.error(`Error deleting tasks for client with ID ${clientId}, error: ${error}`);
     }
-
-    return await this.tasksRepo.deleteAllByUserId(clientId);
   }
 }

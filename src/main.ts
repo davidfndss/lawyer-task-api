@@ -15,6 +15,7 @@ async function bootstrap() {
     .setTitle('LawyerTask API')
     .setDescription('LawyerTask API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);

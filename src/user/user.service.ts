@@ -6,10 +6,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { UserRepository } from './user.repository';
-import { UpdateUserDto } from './dto/user.dto';
+import { UpdateUserDto, UserResponseDto } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
 import { TasksService } from 'src/tasks/tasks.service';
 import { ClientsService } from 'src/clients/clients.service';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class UserService {
@@ -26,9 +27,9 @@ export class UserService {
       throw new NotFoundException('User not found');
     }
 
-    const { password, ...foundUserWithoutPassword } = foundUser;
+    const userDto = plainToInstance(UserResponseDto, foundUser)
 
-    return { message: 'User found successfully!', ...foundUserWithoutPassword };
+    return { message: 'User found successfully!', ...userDto };
   }
 
   async update(id: number, dto: UpdateUserDto, userId: number) {
@@ -65,7 +66,12 @@ export class UserService {
       delete dto.password;
     }
 
-    return this.userRepo.update(id, dto);
+    const updated = await this.userRepo.update(id, dto);
+
+    return {
+      message: 'User updated successfully!',
+      user: plainToInstance(UserResponseDto, updated),
+    }
   }
 
   async remove(id: number, userId: number) {
@@ -77,6 +83,6 @@ export class UserService {
     await this.clientsService.deleteAllByUserId(userId);
     await this.userRepo.remove(id);
 
-    return { message: 'User deleted successfully' };
+    return { message: 'User deleted successfully!' };
   }
 }
