@@ -18,3 +18,11 @@ export class UpdateUserDto {
   @MinLength(6)
   password?: string;
 }
+
+// export class UserResponseDto {
+//   id: number;
+//   email: string;
+//   createdAt: Date;
+//   updatedAt: Date;
+//   Tasks: []
+// }

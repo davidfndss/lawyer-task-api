@@ -26,7 +26,9 @@ export class UserService {
       throw new NotFoundException('User not found');
     }
 
-    return foundUser;
+    const { password, ...foundUserWithoutPassword } = foundUser;
+
+    return { message: 'User found successfully!', ...foundUserWithoutPassword };
   }
 
   async update(id: number, dto: UpdateUserDto, userId: number) {
