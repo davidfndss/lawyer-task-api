@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
-import { PrismaService } from '@/database/prisma.service';
+import { PrismaService } from 'src/database/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from 'src/user/user.repository';
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
