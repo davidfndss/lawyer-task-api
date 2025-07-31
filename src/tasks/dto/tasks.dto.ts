@@ -4,6 +4,7 @@ import {
   IsString,
   IsDateString,
   IsInt,
+  IsOptional,
 } from 'class-validator';
 import { TaskPriority, TaskStatus } from 'generated/prisma/client';
 import { PartialType } from '@nestjs/mapped-types';
@@ -54,38 +55,43 @@ export class CreateTaskDto {
 }
 
 export class UpdateTaskDto {
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
     description: 'Task title',
     required: false,
   })
-  title: string;
+  title?: string;
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
     description: 'Task description',
     required: false,
   })
-  description: string;
+  description?: string;
 
+  @IsOptional()
   @IsEnum(TaskStatus)
   @ApiProperty({
     description: 'Task status',
     required: false,
     enum: TaskStatus,
   })
-  status: TaskStatus;
+  status?: TaskStatus;
 
+  @IsOptional()
   @IsEnum(TaskPriority)
   @ApiProperty({
     description: 'Task priority',
     required: false,
     enum: TaskPriority,
   })
-  priority: TaskPriority;
+  priority?: TaskPriority;
 
+  @IsOptional()
   @IsDateString()
   @ApiProperty({
     description: 'Task due date',
@@ -93,14 +99,15 @@ export class UpdateTaskDto {
     format: 'date-time',
     required: false,
   })
-  dueDate: string;
+  dueDate?: string;
 
+  @IsOptional()
   @IsInt()
   @ApiProperty({
     description: 'Client ID associated with the task',
     required: false,
   })
-  clientId: number;
+  clientId?: number;
 }
 
 export class TaskResponseDto {

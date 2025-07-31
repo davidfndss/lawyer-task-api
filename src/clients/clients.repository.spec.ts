@@ -2,29 +2,39 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ClientsRepository } from './clients.repository';
 import { PrismaService } from 'src/database/prisma.service';
 
-describe('Repository', () => {
-  let provider: ClientsRepository;
+describe('ClientsRepository', () => {
+  let repository: ClientsRepository;
+  let prismaMock: any;
 
   beforeEach(async () => {
-    const mockPrismaService = {
+    prismaMock = {
       client: {
         findUnique: jest.fn(),
+        findMany: jest.fn(),
+        create: jest.fn(),
         update: jest.fn(),
         delete: jest.fn(),
+        deleteMany: jest.fn(),
       },
     };
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ClientsRepository, {
-        provide: PrismaService,
-        useValue: mockPrismaService,
-      }],
+      providers: [
+        ClientsRepository,
+        { provide: PrismaService, useValue: prismaMock },
+      ],
     }).compile();
 
-    provider = module.get<ClientsRepository>(ClientsRepository);
+    repository = module.get<ClientsRepository>(ClientsRepository);
   });
 
   it('should be defined', () => {
-    expect(provider).toBeDefined();
+    expect(repository).toBeDefined();
+  });
+
+  it('should call findOne', async () => {
+    prismaMock.client.findUnique.mockResolvedValue({ id: 1 });
+    const result = await repository.findOne(1);
+    expect(result).toEqual({ id: 1 });
   });
 });
