@@ -14,7 +14,7 @@ export class TasksRepository {
 
   findAll(userId: number) {
     return this.prisma.task.findMany({
-      where: { userId: userId }, 
+      where: { userId }, 
       include: { client: true },
     });
   }

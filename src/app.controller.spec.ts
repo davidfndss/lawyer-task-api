@@ -15,8 +15,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return a welcome message', () => {
+      expect(appController.getWelcome()).toBe('Welcome to the LawyerTask API! This API provides endpoints for managing tasks, users, authentication, and clients. For more information, please refer to the API documentation. check the Swagger UI at /doc');
     });
   });
 });

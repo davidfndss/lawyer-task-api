@@ -1,4 +1,4 @@
-import { BadRequestException, forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, forwardRef, Inject, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { ClientsRepository } from './clients.repository';
 import { CreateClientDto, UpdateClientDto } from './dto/clients.dto';
 import { TasksService } from 'src/tasks/tasks.service';
@@ -10,7 +10,13 @@ export class ClientsService {
     private readonly tasksService: TasksService) {}
 
   create(dto: CreateClientDto, userId: number) {
-    return this.clientsRepo.create(dto, userId);
+    const clientCreated = this.clientsRepo.create(dto, userId);
+
+    if (!clientCreated) {
+      throw new InternalServerErrorException('Failed to create client');
+    }
+
+    return clientCreated;
   }
 
   findAll(userId: number) {
