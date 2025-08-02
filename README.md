@@ -57,8 +57,8 @@ JWT_SECRET=<your-jwt-secret->
 PORT=<port-of-your-preference>
 ```
 
-> no campo DATABASE_URL, utilize a URI de conexão ao seu banco de dados
->no campo JWT_SECRET, você pode geraar sua senha com o algoritmo SHA-256
+> No campo DATABASE_URL, utilize a URI de conexão ao seu banco de dados
+> No campo JWT_SECRET, você pode gerar sua senha com o algoritmo SHA-256
 
 <br>
 
@@ -70,7 +70,7 @@ npm install
 
 <br>
 
-#### 4. Rode as migrations prisma
+#### 4. Configure a estrutura do projeto no banco de dados:
 
 ```sh
 npx prisma migrate dev --name init
@@ -106,7 +106,7 @@ Para parar o projeto, basta interromper o processo no terminal com o atalho `Ctr
 
 <br>
 
-#### 8. Tests
+#### 8. Testes
 
 Para rodar os testes unitários do projeto, digite:
 
