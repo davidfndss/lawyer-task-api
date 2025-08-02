@@ -1,4 +1,4 @@
-# LawerTask-API - Gerencie suas tarefas jurídicas
+# LawyerTask-API - Gerencie suas tarefas jurídicas
 
 <br>
 
@@ -10,7 +10,7 @@
 
 
 
-Este documento guia o setup local do projeto **LawerTask API** com NestJS & Prisma ORM.
+Este documento guia o setup local do projeto **LawyerTask API** com NestJS & Prisma ORM.
 
 <br>
 
