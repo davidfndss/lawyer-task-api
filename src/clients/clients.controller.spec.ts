@@ -32,8 +32,7 @@ describe('ClientsController', () => {
     it('should call service.create with correct data', async () => {
       const dto: CreateClientDto = {
         name: 'John Doe',
-        email: 'john@example.com',
-        phone: '12345678',
+        email: 'john@example.com'
       };
       const mockUser = { user: { id: 1 } };
       const result = { id: 1, ...dto };
@@ -49,7 +48,7 @@ describe('ClientsController', () => {
   describe('findAll', () => {
     it('should call service.findAll with user ID', async () => {
       const mockUser = { user: { id: 1 } };
-      const clients = [{ id: 1, name: 'Test', email: 't@test.com', phone: '123' }];
+      const clients = [{ id: 1, name: 'Test', email: 't@test.com' }];
 
       mockService.findAll.mockResolvedValue(clients);
 
