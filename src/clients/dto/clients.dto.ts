@@ -15,14 +15,6 @@ export class CreateClientDto {
     description: 'Client email address',
   })
   email: string;
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty({
-    description: 'Client phone number',
-    required: false,
-  })
-  phone?: string;
 }
 
 export class UpdateClientDto {
@@ -35,11 +27,6 @@ export class UpdateClientDto {
   @IsOptional()
   @ApiProperty({ description: 'Client email address', required: false })
   email?: string;
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty({ description: 'Client phone number', required: false })
-  phone?: string;
 }
 
 export class ClientResponseDto {
@@ -51,7 +38,4 @@ export class ClientResponseDto {
 
   @ApiProperty({ description: 'Client email address' })
   email: string;
-
-  @ApiProperty({ description: 'Client phone number' })
-  phone: string;
 }

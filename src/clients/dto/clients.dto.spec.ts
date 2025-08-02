@@ -16,7 +16,6 @@ describe('CreateClientDto', () => {
     const dto = new CreateClientDto();
     dto.name = 'John Doe';
     dto.email = 'john@example.com';
-    dto.phone = '123456789';
 
     const errors = await validate(dto);
     expect(errors.length).toBe(0);

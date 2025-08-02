@@ -35,6 +35,7 @@ export class ClientsController {
   @ApiOperation({ summary: 'Create a new client' })
   @ApiBody({ type: CreateClientDto })
   @ApiResponse({ status: 201, description: 'Client created successfully', type: ClientResponseDto })
+  @ApiResponse({ status: 400, description: 'Bad request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
   create(@Body() dto: CreateClientDto, @Request() req) {
@@ -54,8 +55,9 @@ export class ClientsController {
   @ApiOperation({ summary: 'Get a specific client by ID' })
   @ApiParam({ name: 'id', type: 'string', description: 'Client ID' })
   @ApiResponse({ status: 200, description: 'Client found', type: ClientResponseDto })
-  @ApiResponse({ status: 404, description: 'Client not found or access denied' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 404, description: 'Client not found or access denied' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
   findOne(@Param('id') id: string, @Request() req) {
     return this.clientService.findOne(+id, req.user.id);

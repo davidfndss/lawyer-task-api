@@ -8,7 +8,7 @@ export class TasksRepository {
 
   create(data: CreateTaskDto, userId: number) {
     return this.prisma.task.create({
-      data: { ...data, userId },
+      data: { ...data, userId, dueDate: new Date(data.dueDate) },
     });
   }
 
@@ -24,7 +24,10 @@ export class TasksRepository {
   }
 
   update(id: number, data: UpdateTaskDto) {
-    return this.prisma.task.update({ where: { id }, data });
+    return this.prisma.task.update({ where: { id }, data: {
+      ...data,
+      dueDate: data.dueDate ? new Date(data.dueDate) : undefined, 
+    }});
   }
 
   delete(id: number) {

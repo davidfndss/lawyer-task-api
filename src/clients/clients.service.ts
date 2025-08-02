@@ -55,7 +55,7 @@ export class ClientsService {
       throw new NotFoundException(`You do not have permission to update this client`);
     }
 
-    if (!dto.name && !dto.email && !dto.phone) {
+    if (!dto.name && !dto.email) {
       throw new BadRequestException(`At least one field must be provided to update the client`);
     }
 

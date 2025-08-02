@@ -27,6 +27,7 @@ export class AuthController {
       atk: 'jwt.token.string'
     }
   }})
+  @ApiResponse({ status: 400, description: 'Invalid request' })
   @ApiResponse({ status: 401, description: 'Invalid credentials' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
   @ApiBody({ type: CreateUserDto })
@@ -42,6 +43,7 @@ export class AuthController {
       atk: 'jwt.token.string'
     }
   }})
+  @ApiResponse({ status: 400, description: 'Invalid request' })
   @ApiResponse({ status: 409, description: 'Email already registered' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
   @ApiBody({ type: CreateUserDto })
